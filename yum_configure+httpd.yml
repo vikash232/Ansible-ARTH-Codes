@@ -1,0 +1,60 @@
+- hosts: all
+  vars:
+    - dvd_dir: "/dvd"
+    - document_root: "/var/www/arth"
+    - port: "8080"
+  tasks:
+    - file:
+        state: directory
+        path: "{{ dvd_dir }}"
+
+    - mount:
+        src: "/dev/cdrom"
+        path: "{{ dvd_dir }}"
+        state: mounted
+        fstype: iso9660
+
+    - yum_repository:
+        baseurl: "{{ dvd_dir }}/AppStream"
+        name: "dvd1"
+        description: "AppStream dvd"
+        gpgcheck: no
+
+    - yum_repository:
+        baseurl: "{{ dvd_dir }}/BaseOS"
+        name: "dvd2"
+        description: "BaseOS dvd"
+        gpgcheck: no
+
+    - package:
+        name: "httpd"
+        state: present
+
+    - file:
+        state: directory
+        path: "{{ document_root }}"
+
+    - copy:
+        dest: "/etc/httpd/conf.d/apache.conf"
+        src: "apache.conf"
+
+    - copy:
+        dest: "{{ document_root }}/index.html"
+        content: "Welcome to ne my page location!!"
+
+    - service:
+        name: "httpd"
+        state: restarted
+        enabled: yes
+
+    - firewalld:
+        port: "{{port}}/tcp"
+        state: enabled
+        permanent: yes
+        immediate: yes
+
+
+
+
+
+
