@@ -1,8 +1,6 @@
 - hosts: all
-  vars:
-    - dvd_dir: "/dvd"
-    - document_root: "/var/www/arth"
-    - port: "8080"
+  vars_files:
+    - httpd_vars.yml
   tasks:
     - file:
         state: directory
@@ -34,7 +32,7 @@
         state: directory
         path: "{{ document_root }}"
 
-    - copy:
+    - template:
         dest: "/etc/httpd/conf.d/apache.conf"
         src: "apache.conf"
 
@@ -48,7 +46,7 @@
         enabled: yes
 
     - firewalld:
-        port: "{{port}}/tcp"
+        port: "{{ port_num }}/tcp"
         state: enabled
         permanent: yes
         immediate: yes
