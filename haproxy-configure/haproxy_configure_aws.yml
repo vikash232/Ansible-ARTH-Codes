@@ -56,8 +56,8 @@
   tasks:
   - name: "Adding security group rule for haproxy"
     ec2_group:
-      aws_access_key: AKIASM2OPWU4HKK5PVOD
-      aws_secret_key: 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
+      aws_access_key: A**************D
+      aws_secret_key: u*******************************x
       region: "ap-south-1"
       vpc_id: "vpc-c62ecead"
       name: "launch-wizard-2"
@@ -71,8 +71,8 @@
  
   - name: "Adding firewall rule for httpd"
     ec2_group:
-      aws_access_key: AKIASM2OPWU4HKK5PVOD
-      aws_secret_key: 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
+      aws_access_key: A**************D
+      aws_secret_key: u*******************************x
       region: "ap-south-1"
       vpc_id: "vpc-c62ecead"
       name: "launch-wizard-3"
